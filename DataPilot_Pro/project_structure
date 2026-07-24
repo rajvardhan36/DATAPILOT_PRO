@@ -1,6 +1,5 @@
 data_analytics_app/
 ├── app.py
-├── requirements.txt
 ├── config.py
 ├── utils/
 │   ├── __init__.py
