@@ -1,0 +1,21 @@
+Order_ID,Order_Date,Product_Category,Product_Name,Brand,Units_Sold,Unit_Price,Revenue,Discount_Percentage,Profit,Region,Customer_Rating,Review_Count,Delivery_Days,Delivery_Status,Returned
+ORD-2024-001,2024-01-15,Electronics,Wireless Earbuds Pro,SoundMax,145,79.99,11598.55,10,9258.84,North America,4.5,2345,2,Delivered,FALSE
+ORD-2024-002,2024-01-15,Books,Programming Guide 2024,TechPress,89,39.99,3559.11,5,2847.29,South America,4.8,1890,3,Delivered,FALSE
+ORD-2024-003,2024-01-16,Clothing,Winter Jacket Premium,FashionWear,67,149.99,10049.33,20,6719.46,Europe,4.2,1567,5,In Transit,FALSE
+ORD-2024-004,2024-01-16,Home,Smart TV 55 inch,TechVision,234,799.99,187197.66,15,134999.79,Asia Pacific,4.7,3421,2,Delivered,FALSE
+ORD-2024-005,2024-01-17,Electronics,Gaming Console X,GamePro,34,499.99,16999.66,10,13599.73,North America,4.9,4567,1,Delivered,FALSE
+ORD-2024-006,2024-01-17,Beauty,Organic Skincare Set,NatureGlow,156,89.99,14038.44,12,10337.67,Europe,4.6,2341,3,Delivered,FALSE
+ORD-2024-007,2024-01-18,Books,Science Fiction Collection,LiteraryHouse,78,19.99,1559.22,0,1559.22,South America,4.3,987,4,Delivered,FALSE
+ORD-2024-008,2024-01-18,Electronics,Tablet Pro Max,TechVision,189,299.99,56698.11,8,43648.41,Asia Pacific,4.4,2890,2,Delivered,TRUE
+ORD-2024-009,2024-01-19,Clothing,Sneakers Air Max,SportFit,124,79.99,9918.76,10,7928.81,North America,4.1,3456,2,Delivered,FALSE
+ORD-2024-010,2024-01-19,Home,Coffee Maker Deluxe,HomeChef,56,89.99,5039.44,15,3583.52,Europe,4.5,1234,3,In Transit,TRUE
+ORD-2024-011,2024-01-20,Electronics,Smart Watch Pro,TechWear,234,249.99,58497.66,15,43873.25,Asia Pacific,4.8,5678,1,Delivered,FALSE
+ORD-2024-012,2024-01-20,Sports,Yoga Mat Premium,FitLife,345,29.99,10346.55,5,8765.43,North America,4.6,2345,2,Delivered,FALSE
+ORD-2024-013,2024-01-21,Beauty,Perfume Collection,LuxuryScents,89,79.99,7119.11,8,5477.33,Europe,4.4,1567,3,Delivered,FALSE
+ORD-2024-014,2024-01-21,Electronics,Bluetooth Speaker,SoundWave,167,59.99,10018.33,12,7813.66,North America,4.7,3456,2,Delivered,FALSE
+ORD-2024-015,2024-01-22,Clothing,Designer Handbag,FashionWear,45,199.99,8999.55,10,7199.64,Asia Pacific,4.9,2345,2,Delivered,FALSE
+ORD-2024-016,2024-01-22,Books,Financial Freedom Guide,WealthPress,234,24.99,5847.66,5,4925.71,South America,4.3,1234,4,Delivered,FALSE
+ORD-2024-017,2024-01-23,Home,Robot Vacuum,HomeChef,78,299.99,23399.22,15,16622.88,Europe,4.6,2345,3,Delivered,FALSE
+ORD-2024-018,2024-01-23,Electronics,Laptop Pro,TechVision,34,1299.99,44199.66,10,39779.69,North America,4.9,4567,1,Delivered,FALSE
+ORD-2024-019,2024-01-24,Clothing,Leather Jacket,FashionWear,56,189.99,10639.44,8,8625.89,Asia Pacific,4.5,1234,2,In Transit,FALSE
+ORD-2024-020,2024-01-24,Sports,Fitness Tracker,FitLife,234,79.99,18719.66,10,14039.75,North America,4.4,2345,1,Delivered,FALSE

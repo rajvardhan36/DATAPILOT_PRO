@@ -1,0 +1,20 @@
+data_analytics_app/
+├── app.py
+├── requirements.txt
+├── config.py
+├── utils/
+│   ├── __init__.py
+│   ├── data_analyzer.py
+│   └── visualizer.py
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   └── main.js
+│   └── images/
+├── templates/
+│   ├── base.html
+│   ├── index.html
+│   ├── dashboard.html
+│   └── error.html
+└── uploads/

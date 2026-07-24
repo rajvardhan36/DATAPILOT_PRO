@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - DataViz Pro{% endblock %}
+
+{% block extra_head %}
+<meta name="filename" content="{{ filename }}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-item active" data-tab="overview">
+            📊 Overview
+        </div>
+        <div class="sidebar-item" data-tab="preview">
+            📋 Data Preview
+        </div>
+        <div class="sidebar-item" data-tab="statistics">
+            📈 Statistics
+        </div>
+        <div class="sidebar-item" data-tab="visualize">
+            🎨 Visualize
+        </div>
+        <div class="sidebar-item" data-tab="quality">
+            ✅ Quality Report
+        </div>
+        <div class="sidebar-item" data-tab="export">
+            💾 Export
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="card">
+                <h2>Dataset Overview</h2>
+                <div class="stats-grid" style="margin-top:16px;">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Rows</div>
+                        <div class="stat-value">{{ basic_info.total_rows }}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Total Columns</div>
+                        <div class="stat-value">{{ basic_info.total_columns }}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Numeric Columns</div>
+                        <div class="stat-value">{{ basic_info.numeric_columns|length }}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Categorical Columns</div>
+                        <div class="stat-value">{{ basic_info.categorical_columns|length }}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Missing Values</div>
+                        <div class="stat-value">{{ basic_info.missing_values }}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Duplicate Rows</div>
+                        <div class="stat-value">{{ basic_info.duplicate_rows }}</div>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top:24px;margin-bottom:12px;">Column List</h3>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                    {% for col in columns %}
+                        <span class="badge badge-primary">{{ col }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview Tab -->
+        <div id="preview" class="tab-content">
+            <div class="card">
+                <h3>Data Preview</h3>
+                <div id="previewContainer">
+                    <p class="text-muted">Loading data...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Tab -->
+        <div id="statistics" class="tab-content">
+            <div class="card">
+                <h3>Column Statistics</h3>
+                <p class="text-muted">Select a column to view detailed statistics</p>
+                <div class="controls">
+                    <select id="statsColumn">
+                        <option value="">Select a column...</option>
+                        {% for col in columns %}
+                            <option value="{{ col }}">{{ col }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-primary" onclick="loadColumnStats()">View Statistics</button>
+                </div>
+                <div id="statsContainer">
+                    <p class="text-muted">Select a column and click "View Statistics"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visualize Tab -->
+        <div id="visualize" class="tab-content">
+            <div class="card">
+                <h3>Create Visualization</h3>
+                <div class="controls">
+                    <select id="vizType">
+                        <option value="histogram">Histogram</option>
+                        <option value="boxplot">Box Plot</option>
+                        <option value="scatter">Scatter Plot</option>
+                        <option value="barchart">Bar Chart</option>
+                        <option value="piechart">Pie Chart</option>
+                        <option value="line">Line Chart</option>
+                        <option value="correlation">Correlation Heatmap</option>
+                    </select>
+                    
+                    <select id="vizColumn">
+                        <option value="">Select column...</option>
+                        {% for col in columns %}
+                            <option value="{{ col }}">{{ col }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <select id="xColumn">
+                        <option value="">X Column...</option>
+                        {% for col in numeric_cols %}
+                            <option value="{{ col }}">{{ col }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <select id="yColumn">
+                        <option value="">Y Column...</option>
+                        {% for col in numeric_cols %}
+                            <option value="{{ col }}">{{ col }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <select id="colorColumn">
+                        <option value="">Color by...</option>
+                        {% for col in categorical_cols %}
+                            <option value="{{ col }}">{{ col }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <input type="number" id="bins" placeholder="Bins" value="30" min="5" max="100">
+                    <input type="number" id="topN" placeholder="Top N" value="20" min="5" max="50">
+                    
+                    <button id="createVizBtn" class="btn btn-primary">Create Chart</button>
+                </div>
+                <div id="visualizationContainer" class="viz-container">
+                    <p class="text-muted" style="text-align:center;padding:40px;">Select chart type and parameters, then click "Create Chart"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quality Report Tab -->
+        <div id="quality" class="tab-content">
+            <div class="card">
+                <h3>Data Quality Report</h3>
+                <div id="qualityReport">
+                    <p class="text-muted">Loading quality report...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Tab -->
+        <div id="export" class="tab-content">
+            <div class="card">
+                <h3>Export Data</h3>
+                <p class="text-muted">Export your dataset in different formats</p>
+                <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;">
+                    <button class="btn btn-success export-btn" data-format="csv">📄 Export as CSV</button>
+                    <button class="btn btn-success export-btn" data-format="excel">📊 Export as Excel</button>
+                </div>
+                
+                <hr style="margin:24px 0;">
+                
+                <h4>Visualization Export</h4>
+                <p class="text-muted">Right-click on any chart to save it as PNG or SVG</p>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function loadColumnStats() {
+    const column = document.getElementById('statsColumn').value;
+    if (!column) {
+        showAlert('error', 'Please select a column');
+        return;
+    }
+    
+    fetch(`/api/stats/${currentFilename}/${column}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                showAlert('error', data.error);
+                return;
+            }
+            renderStats(data, column);
+        })
+        .catch(error => {
+            showAlert('error', 'Failed to load statistics');
+            console.error(error);
+        });
+}
+
+function renderStats(data, column) {
+    const container = document.getElementById('statsContainer');
+    let html = '<div class="grid-2" style="margin-top:16px;">';
+    
+    if (data.type === 'numeric') {
+        const stats = [
+            {label: 'Count', value: data.count},
+            {label: 'Mean', value: data.mean.toFixed(2)},
+            {label: 'Median', value: data.median.toFixed(2)},
+            {label: 'Mode', value: data.mode !== null ? data.mode.toFixed(2) : 'N/A'},
+            {label: 'Min', value: data.min.toFixed(2)},
+            {label: 'Max', value: data.max.toFixed(2)},
+            {label: 'Std Dev', value: data.std.toFixed(2)},
+            {label: 'Variance', value: data.variance.toFixed(2)},
+            {label: 'Skewness', value: data.skewness.toFixed(2)},
+            {label: 'Kurtosis', value: data.kurtosis.toFixed(2)},
+            {label: 'Missing', value: data.missing},
+            {label: 'Unique Values', value: data.unique_values}
+        ];
+        
+        stats.forEach(stat => {
+            html += `<div class="stat-card"><div class="stat-label">${stat.label}</div><div class="stat-value">${stat.value}</div></div>`;
+        });
+    } else if (data.type === 'categorical') {
+        html += `<div class="stat-card"><div class="stat-label">Count</div><div class="stat-value">${data.count}</div></div>`;
+        html += `<div class="stat-card"><div class="stat-label">Unique Values</div><div class="stat-value">${data.unique_values}</div></div>`;
+        html += `<div class="stat-card"><div class="stat-label">Most Frequent</div><div class="stat-value">${data.most_frequent || 'N/A'}</div></div>`;
+        html += `<div class="stat-card"><div class="stat-label">Frequency</div><div class="stat-value">${data.frequency || 0}</div></div>`;
+        html += `<div class="stat-card"><div class="stat-label">Missing</div><div class="stat-value">${data.missing}</div></div>`;
+        
+        if (data.top_values) {
+            html += '<div class="card" style="grid-column: 1 / -1;"><h4>Top Values</h4><table class="table"><thead><tr><th>Value</th><th>Count</th></tr></thead><tbody>';
+            for (const [value, count] of Object.entries(data.top_values)) {
+                html += `<tr><td>${value}</td><td>${count}</td></tr>`;
+            }
+            html += '</tbody></table></div>';
+        }
+    }
+    
+    html += '</div>';
+    container.innerHTML = html;
+}
+</script>
+{% endblock %}
